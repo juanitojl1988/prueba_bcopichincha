@@ -31,9 +31,9 @@ public class TransactionController extends AbstractRestHandler {
         this.transactionService = transactionService;
     }
 
-    
     /**
      * Permite Crear una Transaccion
+     * 
      * @param transaction
      * @return
      */
@@ -51,12 +51,13 @@ public class TransactionController extends AbstractRestHandler {
     }
 
     @RequestMapping(value = "report", method = RequestMethod.GET, produces = { "application/json" })
-	@ResponseStatus(HttpStatus.OK)
-	public @ResponseBody List<Report> report(
-			@RequestParam(value = "fechaIni", required = true) String dateIni,
-			@RequestParam(value = "fechaFin", required = true) String dateEnd) throws ParseException {
+    @ResponseStatus(HttpStatus.OK)
+    public @ResponseBody List<Report> report(
+            @RequestParam(value = "identificacion", required = true) String identificacion,
+            @RequestParam(value = "fechaIni", required = true) String dateIni,
+            @RequestParam(value = "fechaFin", required = true) String dateEnd) throws ParseException {
 
-		return this.transactionService.report(dateIni, dateEnd);
-	}
+        return this.transactionService.report(dateIni, dateEnd, identificacion);
+    }
 
 }

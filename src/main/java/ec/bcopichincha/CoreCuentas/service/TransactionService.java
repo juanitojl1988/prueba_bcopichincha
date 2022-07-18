@@ -37,12 +37,12 @@ public class TransactionService implements ServiceInterface<Transaction, Long> {
         return this.transactionRepository.executeTransaction(limitDaily, requestTransaction).get();
     }
 
-    public List<Report> report(String dateIni, String dateEnd) throws ParseException {
+    public List<Report> report(String dateIni, String dateEnd,String identification) throws ParseException {
 
-        DateFormat formatter = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         Date dateI = formatter.parse(dateIni);
         Date dateF = formatter.parse(dateEnd);
-        return this.transactionRepository.report(dateI, dateF);
+        return this.transactionRepository.report(dateI, dateF,identification);
     }
 
     @Override

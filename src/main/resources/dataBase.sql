@@ -22,7 +22,6 @@ CREATE TABLE public.client (
 
 CREATE TABLE public.account (
 	id bigserial NOT NULL,
-	current_balance float8 NOT NULL,
 	initial_balance float8 NOT NULL,
 	num_account varchar(40) NOT NULL,
 	state bool NOT NULL,
@@ -50,11 +49,9 @@ ALTER TABLE public."transaction" ADD CONSTRAINT fk6g20fcr3bhr6bihgy24rq1r1b FORE
 ALTER TABLE public.account ADD CONSTRAINT fkkm8yb63h4ownvnlrbwnadntyn FOREIGN KEY (client_id) REFERENCES public.client(id);
 
 
-INSERT INTO public.client  (address, age, gender, identification_card, "name", telephone, "password", state, updated_at, username) 
-VALUES( 'Otavalo sn y principal ', 54, 'M', '22222222222', 'Jose Lema', '098254785', '1234', true, now(), '');
 
-INSERT INTO public.client  (address, age, gender, identification_card, "name", telephone, "password", state, updated_at, username) 
-VALUES( 'Amazonas y NNUU', 32, 'F', '3333333333', 'Marianela Montalvo ', '097548965 ', '5678', true, now(), '');
+-- INSERT INTO public.client  (address, age, gender, identification_card, "name", telephone, "password", state, updated_at, username) 
+-- VALUES( 'Amazonas y NNUU', 32, 'F', '3333333333', 'Marianela Montalvo ', '097548965 ', '5678', true, now(), '');
 
-INSERT INTO public.client  (address, age, gender, identification_card, "name", telephone, "password", state, updated_at, username) 
-VALUES( '13 junio y Equinoccial ', 45, 'M', '55555555555', 'Juan Osorio ', '098874587', '1245', true, now(), '');
+-- INSERT INTO public.client  (address, age, gender, identification_card, "name", telephone, "password", state, updated_at, username) 
+-- VALUES( '13 junio y Equinoccial ', 45, 'M', '55555555555', 'Juan Osorio ', '098874587', '1245', true, now(), '');

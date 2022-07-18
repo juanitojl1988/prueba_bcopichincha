@@ -8,12 +8,11 @@ import java.util.Date;
 
 @Entity
 @Table(name = "account")
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 @Getter
 @Setter
-@EntityListeners(AuditingEntityListener.class)
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class Account {
 
     

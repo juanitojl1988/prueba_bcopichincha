@@ -4,11 +4,14 @@ import lombok.*;
 
 import java.util.Date;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
 @Getter
 @Setter
+@XmlRootElement
 public class Report {
 
     private Date date;

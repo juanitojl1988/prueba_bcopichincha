@@ -1,9 +1,12 @@
 package ec.bcopichincha.CoreCuentas.service;
 
 import ec.bcopichincha.CoreCuentas.exeption.AccountNotFoundException;
+import ec.bcopichincha.CoreCuentas.exeption.ClientNotFoundException;
 import ec.bcopichincha.CoreCuentas.model.Account;
+import ec.bcopichincha.CoreCuentas.model.Client;
 import ec.bcopichincha.CoreCuentas.model.Transaction;
 import ec.bcopichincha.CoreCuentas.repository.AccountRepository;
+import ec.bcopichincha.CoreCuentas.repository.ClientRepository;
 import ec.bcopichincha.CoreCuentas.repository.TransactionRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +14,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.Date;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 @Service
 public class AccountService implements ServiceInterface<Account, Long> {
@@ -21,6 +27,8 @@ public class AccountService implements ServiceInterface<Account, Long> {
     private AccountRepository accountRepository;
     @Autowired
     private TransactionRepository transactionRepository;
+    @Autowired
+    private ClientRepository clientRepository;
 
     @Override
     public Page<Account> findAll(Integer page, Integer size) {
@@ -37,7 +45,14 @@ public class AccountService implements ServiceInterface<Account, Long> {
     }
 
     @Override
+    @Transactional(dontRollbackOn  = { SQLException.class })
     public Account save(Account entity) {
+        
+        Optional<Client> client=clientRepository.findById(entity.getClient().getId());
+        if (!client.isPresent()) {
+            throw new ClientNotFoundException();
+        }
+        entity.setClient(client.get());
         Account account = this.accountRepository.save(entity);
         if (account != null) {
             Transaction transaction = new Transaction();

@@ -13,6 +13,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Query;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
@@ -23,8 +24,15 @@ import java.util.Optional;
 public class CustomTransactionRepositoryImpl implements CustomTransactionRepository {
 
     private final static String SQL_GET_ACCOUNT = "select * from account a where a.num_account =:numAccount";
-    private final static String SQL_GET_AMOUNT_DAY = "select sum(value) from transaction t where t.account_id =:account and t.state =true and t.type_transaction ='D'  and created_at =now()";
+    private final static String SQL_GET_AMOUNT_DAY = "select sum(value) from transaction t where t.account_id =:account and t.state =true and t.type_transaction ='D'  and CAST(created_at AS DATE)=CAST(now() AS DATE)";
     private final static String SQL_GET_BALANCE = "select * from transaction t where t.account_id =:account and t.state =true order by t.created_at  desc limit 1";
+
+    private final static String SQL_REPORT = "select t.created_at,c.name,a.num_account , (case when a.type_account='A' then 'Ahorros' else 'Corriente' end) as type_account , a.initial_balance ,t.state,t.value ,t.balance "
+            + " from  transaction t"
+            + " inner join account a on t.account_id =a.id "
+            + " inner join client c  on c.id =a.client_id "
+            + " where t.created_at  between :fechaIni and :fechaEnd"
+            + " and c.identification_card =:identification order by t.created_at desc";
 
     @Autowired
     private EntityManagerFactory emf;
@@ -33,8 +41,11 @@ public class CustomTransactionRepositoryImpl implements CustomTransactionReposit
     public Optional<Response> executeTransaction(double limitDaily, RequestTransaction requestTransaction) {
         EntityManager entityManager = null;
         try {
-            boolean isCredit = true;
+            boolean isCredit = requestTransaction.getAmount().doubleValue() > 0;
             double balance = 0;
+            double value = requestTransaction.getAmount().doubleValue() < 0
+                    ? (-1 * requestTransaction.getAmount().doubleValue())
+                    : requestTransaction.getAmount().doubleValue();
             entityManager = emf.createEntityManager();
             Query lQuery = entityManager.createNativeQuery(SQL_GET_ACCOUNT, Account.class);
             setParametersQuery(lQuery, Map.of("numAccount", requestTransaction.getNumAccount().trim()));
@@ -52,23 +63,23 @@ public class CustomTransactionRepositoryImpl implements CustomTransactionReposit
             balance = lastTransaction == null ? 0 : lastTransaction.getBalance();
 
             // para cuando se realiza la transacion de Retiro
-            if (Double.compare(requestTransaction.getAmount(), 0) == 0) {
-                isCredit = false;
-
+            if (!isCredit) {
                 // verifica que tenga saldo en la cuenta
-                if (lastTransaction == null || Double.compare(balance, 0) == 0
-                        || (balance - requestTransaction.getAmount()) < 0) {
+                if (lastTransaction == null || balance == 0
+                        || (balance - value) < 0) {
                     return Optional.of(new Response(true, "Saldo no disponible"));
                 }
 
                 // verifica que no se haya pasado el limite
-                lQuery = entityManager.createNativeQuery(SQL_GET_AMOUNT_DAY, Double.class);
+                lQuery = entityManager.createNativeQuery(SQL_GET_AMOUNT_DAY);
                 setParametersQuery(lQuery, Map.of("account", account.getId()));
-                Double totalInDay = lQuery.getSingleResult() == null ? 0
+                double totalInDay = lQuery.getSingleResult() == null ? 0
                         : Double.parseDouble(lQuery.getSingleResult().toString());
-                // if ((totalInDay + requestTransaction.getAmount()) = > limitDaily) {
-                // return Optional.of(new Response(true, "Cupo diario Excedido"));
-                // }
+
+                double sumTotal = totalInDay + value;
+                if (sumTotal > limitDaily) {
+                    return Optional.of(new Response(true, "Cupo diario Excedido"));
+                }
             }
             // empieza la transaccion
             entityManager.getTransaction().begin();
@@ -76,13 +87,13 @@ public class CustomTransactionRepositoryImpl implements CustomTransactionReposit
             untransaction.setAccount(account);
             untransaction.setState(true);
             untransaction.setTypeTransaction(isCredit ? 'C' : 'D');
-            untransaction.setDescription(isCredit ? "DEposito de " + requestTransaction.getAmount().toString()
-                    : "Retiro de " + requestTransaction.getAmount().toString());
-            untransaction.setValue(requestTransaction.getAmount());
-            untransaction.setBalance(
-                    isCredit ? (balance + requestTransaction.getAmount()) : (balance - requestTransaction.getAmount()));
+            untransaction.setDescription(isCredit ? "Deposito de " + value : "Retiro de " + value);
+            untransaction.setValue(value);
+            untransaction.setBalance(isCredit ? (balance + value) : (balance - value));
+            untransaction.setCreatedAt(new Date());
             entityManager.persist(untransaction);
             entityManager.getTransaction().commit();
+            untransaction.getAccount().setClient(null);
             return Optional.of(new Response(false, "ok", untransaction));
         } catch (Exception e) {
             log.error("Error al Crear la Transaccion", e);
@@ -109,20 +120,34 @@ public class CustomTransactionRepositoryImpl implements CustomTransactionReposit
     }
 
     @Override
-    public List<Report> report(Date dateIni, Date dateEnd) {
+    public List<Report> report(Date dateIni, Date dateEnd, String identification) {
         EntityManager entityManager = null;
+        List<Report> listReport = new ArrayList();
         try {
+            // t.created_at,c.name,a.num_account , (case when a.type_account='A' then
+            // 'Ahorros' else 'Corriente' end) as type_account ,
+            // a.initial_balance 5 ,t.state 6,t.value 7 ,t.balance
             entityManager = emf.createEntityManager();
-            var query = entityManager.createNativeQuery(
-                    "select t.created_at,c.name,a.num_account ,a.type_account , a.initial_balance ,t.state,t.value ,t.balance  from  transaction t "
-                            +
-                            "inner join account a on t.account_id =a.id " +
-                            "inner join client c  on c.id =a.client_id  " +
-                            "where t.created_at  between :fechaIni and :fechaEnd",
-                    Report.class);
+            var query = entityManager.createNativeQuery(SQL_REPORT);
             query.setParameter("fechaIni", dateIni);
-            query.setParameter("fechaIni", dateEnd);
-            return query.getResultList();
+            query.setParameter("fechaEnd", dateEnd);
+            query.setParameter("identification", identification);
+            List<Object[]> list = query.getResultList();
+            if (list != null && !list.isEmpty()) {
+                for (Object[] array : list) {
+                    Report rep = new Report();
+                    rep.setClient((String) array[1]);
+                    rep.setAvailable_balance((Double)array[7]);
+                    rep.setDate((Date)array[0]);
+                    rep.setMovement((Double)array[6]);
+                    rep.setNum_account((String) array[2]);
+                    rep.setState(true);
+                    rep.setType((String) array[3]);
+                    listReport.add(rep);
+                }
+
+            }
+            return listReport;
         } catch (Exception ex) {
             log.error("Error al generar el reporte", ex);
             return Collections.EMPTY_LIST;

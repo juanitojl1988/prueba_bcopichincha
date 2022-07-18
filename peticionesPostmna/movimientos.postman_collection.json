@@ -1,0 +1,129 @@
+{
+	"info": {
+		"_postman_id": "b93cfe7c-4219-4d8a-b455-9dc152462562",
+		"name": "movimientos",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Retiro_575",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"numAccount\": \"478758\",\n  \"typeAccount\": \"A\",\n  \"amount\": -575.00\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/transaction/createTransaction",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transaction",
+						"createTransaction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deposito_600",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"numAccount\": \"225487\",\n  \"typeAccount\": \"C\",\n  \"amount\": 600.00\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/transaction/createTransaction",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transaction",
+						"createTransaction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Deposito_150",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"numAccount\": \"495878\",\n  \"typeAccount\": \"A\",\n  \"amount\": 150.00\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/transaction/createTransaction",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transaction",
+						"createTransaction"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Retiro_540",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"numAccount\": \"496825\",\n  \"typeAccount\": \"A\",\n  \"amount\": -540.00\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/transaction/createTransaction",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transaction",
+						"createTransaction"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

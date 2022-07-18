@@ -1,20 +1,28 @@
 package ec.bcopichincha.CoreCuentas.model;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 import javax.persistence.*;
+
+import org.hibernate.annotations.Proxy;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.util.Date;
 
 @Entity
 @Table(name = "transaction")
-@NoArgsConstructor
-@AllArgsConstructor
-@ToString
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
+@JsonIgnoreProperties(ignoreUnknown = false)
+@Proxy(lazy = false)
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

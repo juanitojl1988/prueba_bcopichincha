@@ -12,5 +12,5 @@ public interface CustomTransactionRepository {
 
     Optional<Response> executeTransaction(double limitDaily, RequestTransaction requestTransaction);
 
-    List<Report> report(Date dateIni, Date dateEnd);
+    List<Report> report(Date dateIni, Date dateEnd,String identification);
 }

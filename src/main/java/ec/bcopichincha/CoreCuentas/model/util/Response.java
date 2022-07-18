@@ -1,5 +1,7 @@
 package ec.bcopichincha.CoreCuentas.model.util;
 
+import javax.xml.bind.annotation.XmlRootElement;
+
 import lombok.*;
 
 @NoArgsConstructor
@@ -7,6 +9,7 @@ import lombok.*;
 @ToString
 @Getter
 @Setter
+@XmlRootElement
 public class Response {
     private boolean error;
     private String message;

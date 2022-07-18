@@ -1,0 +1,44 @@
+{
+	"info": {
+		"_postman_id": "c7948296-498d-41bb-8229-dbccfd271580",
+		"name": "Reporte",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "reporte",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/api/transaction/report?identificacion=3333333333&fechaIni=2022-07-18&fechaFin=2022-07-19",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"transaction",
+						"report"
+					],
+					"query": [
+						{
+							"key": "identificacion",
+							"value": "3333333333"
+						},
+						{
+							"key": "fechaIni",
+							"value": "2022-07-18"
+						},
+						{
+							"key": "fechaFin",
+							"value": "2022-07-19"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

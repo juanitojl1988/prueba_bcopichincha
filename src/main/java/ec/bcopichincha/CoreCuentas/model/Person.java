@@ -10,7 +10,7 @@ public abstract class Person implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "identification_card", length = 15, nullable = false)
+    @Column(name = "identification_card", length = 15, nullable = false,unique=true)
     private String identificationCard;
 
     @Column(name = "name", length = 62, nullable = false)

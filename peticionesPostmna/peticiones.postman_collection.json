@@ -1,0 +1,354 @@
+{
+	"info": {
+		"_postman_id": "24442b84-ffa5-4427-ad23-e65a1aba1364",
+		"name": "peticiones",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "creacionCliente_Jose",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var current_timestamp = new Date();",
+							"postman.setEnvironmentVariable(\"current_timestamp\", current_timestamp.toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"identificationCard\": \"1111111111\",\n  \"name\": \"Jose Lema\",\n  \"gender\": \"M\",\n  \"age\": 30,\n  \"address\": \"Otavalo sn y principal\",\n  \"telephone\": \"098254785 \",\n  \"username\": \"joselema\",\n  \"password\": \"1234\",\n  \"state\": true,\n  \"updatedAt\": \"{{current_timestamp}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/client/client",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"client",
+						"client"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreacionCliente_Marianela",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var current_timestamp = new Date();",
+							"postman.setEnvironmentVariable(\"current_timestamp\", current_timestamp.toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"identificationCard\": \"2222222222\",\n  \"name\": \"Marianela Montalvo\",\n  \"gender\": \"F\",\n  \"age\": 25,\n  \"address\": \"Amazonas y NNUU\",\n  \"telephone\": \"097548965\",\n  \"username\": \"marumontalvo\",\n  \"password\": \"5678\",\n  \"state\": true,\n  \"updatedAt\": \"{{current_timestamp}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/client/client",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"client",
+						"client"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "creacion_cliente_juan",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var current_timestamp = new Date();",
+							"postman.setEnvironmentVariable(\"current_timestamp\", current_timestamp.toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"identificationCard\": \"3333333333\",\n  \"name\": \"Juan Osorio\",\n  \"gender\": \"M\",\n  \"age\": 65,\n  \"address\": \"13 junio y Equinoccial\",\n  \"telephone\": \"098874587\",\n  \"username\": \"junosorio\",\n  \"password\": \"1245\",\n  \"state\": true,\n  \"updatedAt\": \"{{current_timestamp}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8080/api/client/client",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"client",
+						"client"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreacionCuenta_Jose_Ahorro",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var current_timestamp = new Date();",
+							"postman.setEnvironmentVariable(\"current_timestamp\", current_timestamp.toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"numAccount\": \"478758\",\n  \"typeAccount\": \"A\",\n  \"initialBalance\": 2000.00,\n  \"state\": true,\n  \"client\": {\n    \"id\": 1\n  },\n  \"updatedAt\": \"{{current_timestamp}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/account/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"account",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreacionCuenta_Marianela_corriente",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var current_timestamp = new Date();",
+							"postman.setEnvironmentVariable(\"current_timestamp\", current_timestamp.toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"numAccount\": \"225487\",\n  \"typeAccount\": \"C\",\n  \"initialBalance\": 100.00,\n  \"state\": true,\n  \"client\": {\n    \"id\": 2\n  },\n  \"updatedAt\": \"{{current_timestamp}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/account/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"account",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreacionCuenta_Juan",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var current_timestamp = new Date();",
+							"postman.setEnvironmentVariable(\"current_timestamp\", current_timestamp.toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"numAccount\": \"495878\",\n  \"typeAccount\": \"A\",\n  \"initialBalance\": 0.00,\n  \"state\": true,\n  \"client\": {\n    \"id\": 3\n  },\n  \"updatedAt\": \"{{current_timestamp}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/account/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"account",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreacionCuenta_Marianela_Ahorros",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var current_timestamp = new Date();",
+							"postman.setEnvironmentVariable(\"current_timestamp\", current_timestamp.toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"numAccount\": \"496825\",\n  \"typeAccount\": \"A\",\n  \"initialBalance\": 540.00,\n  \"state\": true,\n  \"client\": {\n    \"id\": 2\n  },\n  \"updatedAt\": \"{{current_timestamp}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/account/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"account",
+						"create"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CreacionCuenta_Jose_Corriente",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"var current_timestamp = new Date();",
+							"postman.setEnvironmentVariable(\"current_timestamp\", current_timestamp.toISOString());"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"numAccount\": \"585545\",\n  \"typeAccount\": \"C\",\n  \"initialBalance\": 1000.00,\n  \"state\": true,\n  \"client\": {\n    \"id\": 1\n  },\n  \"updatedAt\": \"{{current_timestamp}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/api/account/create",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"account",
+						"create"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
