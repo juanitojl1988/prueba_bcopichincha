@@ -51,4 +51,10 @@ ALTER TABLE public.account ADD CONSTRAINT fkkm8yb63h4ownvnlrbwnadntyn FOREIGN KE
 
 
 INSERT INTO public.client  (address, age, gender, identification_card, "name", telephone, "password", state, updated_at, username) 
-VALUES( 'Otavalo sn y principal ', 54, 'M', '0105951278', 'Jose Lema', '098254785', '1234', true, now(), 'lemajose');
+VALUES( 'Otavalo sn y principal ', 54, 'M', '22222222222', 'Jose Lema', '098254785', '1234', true, now(), '');
+
+INSERT INTO public.client  (address, age, gender, identification_card, "name", telephone, "password", state, updated_at, username) 
+VALUES( 'Amazonas y NNUU', 32, 'F', '3333333333', 'Marianela Montalvo ', '097548965 ', '5678', true, now(), '');
+
+INSERT INTO public.client  (address, age, gender, identification_card, "name", telephone, "password", state, updated_at, username) 
+VALUES( '13 junio y Equinoccial ', 45, 'M', '55555555555', 'Juan Osorio ', '098874587', '1245', true, now(), '');
